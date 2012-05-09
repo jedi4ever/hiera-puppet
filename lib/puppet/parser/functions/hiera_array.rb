@@ -45,8 +45,9 @@ module Puppet::Parser::Functions
         config[:logger] = "puppet"
 
         # Add yaml dataconfiguration dir to the configuration
-        global_var_yaml_datadir = File.join(lookupvar("hiera_yaml_datadir"))
-        if global_var_yaml_datadir !=""
+        global_var_yaml_datadir = lookupvar("hiera_yaml_datadir")
+
+        unless global_var_yaml_datadir == :undefined
           config[:yaml] = Hash.new if config[:yaml].nil?
           config[:yaml][:datadir] = global_var_yaml_datadir
         end
